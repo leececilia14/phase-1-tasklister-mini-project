@@ -1,40 +1,34 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const tasklist= new Tasklist();
+const newTaskDescription= document.getElementById("new-task-description");
 
-  const newTaskForm = document.getElementById("create-task-form");
-  const newTaskDescription = document.getElementById("new-task-description");
-  const newTaskPriority = document.getElementById("new-task-priority");
+const list= document.getElementById("tasks");
 
-  const taskUl = document.getElementById("tasks");
+const createNewTask= event=> {
+  event.preventDefault();
+  const newTask= document.createElement('li');
 
-newTaskForm.addEventListener("submit", createNewTask);
-});
+newTask.innerText= newTaskDescription.value;
+createButton (newTask); 
+list.appendChild(newTask);
 
-const createNewTask= event => {
-  event.preventDefault(); 
+event.target.reset();
 
-  const newTaskDescription=document.getElementById("new-task-description");
-  const newTask=document.createElement("li");
-  newTask.innerText= newTaskDescription.value;
-
-  appendNewTask(newTask);
-  event.targegt.reset(); 
 };
 
-const appendNewTask= task=>{
-  document.getElementById("tasks").appencChild(task);
-};
+const createButton= task => {
+  const boop= document.createElement('button');
+  boop.innerText= "X";
+
+  task.appendChild(boop);
+  boop.addEventListener('click', (e)=> deleteTask(e));
 }
 
+const deleteTask= (e)=> {
+  const selectedTask= e.target.parentElement;
+  list.removeChild(selectedTask);
+}
+
+document.querySelector('#create-task-form').addEventListener("submit", (e)=>
+createNewTask(e))
 
 
-
-
-
-
-
-
-
-
-
-});
+document.addEventListener("DOMContentLoaded", () => 
